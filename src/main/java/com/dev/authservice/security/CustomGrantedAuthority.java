@@ -11,17 +11,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonDeserialize(as = CustomGrantedAuthority.class)
-@NoArgsConstructor
 public class CustomGrantedAuthority implements GrantedAuthority {
-    private Role role;
+    //    private Role role;
+    private String authority;
+
+    public CustomGrantedAuthority() {}
+
 
     public CustomGrantedAuthority(Role role) {
-        this.role = role;
+//        this.role = role;
+        this.authority = role.getRole();
     }
 
     @Override
-    @JsonIgnore
     public String getAuthority() {
-        return role.getRole();
+//        return role.getName();
+        return authority;
     }
 }
