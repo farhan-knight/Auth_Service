@@ -16,6 +16,7 @@ public class CustomSpringUserDetailsService implements UserDetailsService {
     public CustomSpringUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

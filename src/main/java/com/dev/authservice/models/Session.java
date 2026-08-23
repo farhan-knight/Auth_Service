@@ -11,6 +11,7 @@ import java.util.Date;
 @Entity
 public class Session extends BaseModel{
 
+    @Column(length = 2000)
     private String token;
 
     private Date expiringAt;

@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ValidateTokenDto {
+public class LoginResponseDto {
 
-    private String token;
-    private Long userId;
+    private String accessToken;
+
 }

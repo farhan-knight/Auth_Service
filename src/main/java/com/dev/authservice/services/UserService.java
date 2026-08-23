@@ -7,6 +7,7 @@ import com.dev.authservice.respositories.RoleRepository;
 import com.dev.authservice.respositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -15,7 +16,6 @@ import java.util.Set;
 public class UserService {
 
     private UserRepository userRepository;
-
     private RoleRepository roleRepository;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository) {
@@ -23,25 +23,25 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
-    public UserDto getUserDetails (Long userId) {
-        return UserDto.from(userRepository.findById(userId).get());
+    public UserDto getUserDetails(Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            return null;
+        }
+        return UserDto.from(optionalUser.get());
     }
 
-    public UserDto setUserRoles(Long userId, List<Long> roleIds){
+    public UserDto setUserRoles(Long userId, List<Long> roleIds) {
         Optional<User> userOptional = userRepository.findById(userId);
-        List<Role> roles = roleRepository.findAllByIdIn(roleIds);
-
         if (userOptional.isEmpty()) {
             return null;
         }
 
+        List<Role> roles = roleRepository.findAllByIdIn(roleIds);
         User user = userOptional.get();
-        user.setRoles(Set.copyOf(roles));
-
+        user.setRoles(new HashSet<>(roles));
         User savedUser = userRepository.save(user);
 
         return UserDto.from(savedUser);
     }
-
-
 }

@@ -22,7 +22,7 @@ public class User extends BaseModel{
 
     private String password;
 
-    @ManyToMany(fetch = jakarta.persistence.FetchType.EAGER)
+    @ManyToMany(fetch = jakarta.persistence.FetchType.EAGER, cascade = {jakarta.persistence.CascadeType.MERGE, jakarta.persistence.CascadeType.PERSIST})
     @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 }
